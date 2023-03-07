@@ -3,23 +3,20 @@ import { Link } from "react-router-dom";
 import {
   Home,
   HomeOutlined,
-  SearchOutlined,
   Search,
+  SearchOutlined,
+  ShoppingCart,
   AccountCircle,
   AccountCircleOutlined,
 } from "@mui/icons-material";
 import "./Header.css";
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
-
-
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 function Header() {
   const [tab, setTab] = useState(window.location.pathname);
   return (
     <div className="header">
-      <div className="header-logo">
-        <img src="" alt="logo" />
-      </div>
       <Link to="/" onClick={() => setTab("/")}>
         {tab === "/" ? <Home style={{ color: "black" }} /> : <HomeOutlined />}
       </Link>
@@ -42,9 +39,9 @@ function Header() {
 
       <Link to="/cart" onClick={() => setTab("/cart")}>
         {tab === "/cart" ? (
-          <Search style={{ color: "black" }} />
+          <ShoppingCart style={{ color: "black" }} />
         ) : (
-          <SearchOutlined />
+          <ShoppingCartOutlinedIcon />
         )}
       </Link>
 
