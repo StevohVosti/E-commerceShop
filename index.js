@@ -1,10 +1,20 @@
 const app = require("./app");
-const ConnectDatabase = require("./Database/db");
-const dotenv = require("dotenv");
+const cloudinary = require("cloudinary");
 const { default: mongoose } = require("mongoose");
 dotenv.config({path: "config/config.env"});
+const connectDatabase = require("./config/database");
 
-const PORT = process.env.PORT || 8000;
+// Handling Uncaught Exception
+process.on("uncaughtException", (err) => {
+  console.log(`Error: ${err.message}`);
+  console.log(`Shutting down the server due to Uncaught Exception`);
+  process.exit(1);
+});
+
+// Config
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 // connect Database
 mongoose.set("strictQuery", true);
@@ -12,15 +22,20 @@ mongoose.set("strictQuery", false);
 
 ConnectDatabase();
 
-const server = app.listen(PORT, () => (
-  console.log(`Server is working https://localhost:${PORT}`)
-));
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Server is working on http://localhost:${process.env.PORT}`);
+});
 
 // Unhandled Promise Rejection
-
 process.on("unhandledRejection", (err) => {
   console.log(`Error: ${err.message}`);
-  console.log(`Shutting down the Server due to unhandled Promise Rejection`);
+  console.log(`Shutting down the server due to Unhandled Promise Rejection`);
 
   server.close(() => {
     process.exit(1);
