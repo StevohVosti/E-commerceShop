@@ -19,7 +19,7 @@ app.use(fileUpload());
 
 // Route Imports
 const product = require("./routes/productRoute");
-const user = require("./routes/productRoute");
+const user = require("./routes/userRoute");
 // const order = require("./routes/orderRoute");
 // const payment = require("./routes/paymentRoute");
 
