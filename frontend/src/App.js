@@ -85,9 +85,10 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<UpdatePassword />} exact path="/password/update" />
             <Route element={<Shipping />} exact path="/shipping" />
-          </Route>
+              
             <Route element={<Profile />} exact path="/account" />
             <Route element={<UpdateProfile />} exact path="/me/update" />
+          </Route>
 
           <Route exact path="/about" element={<About />} />
         </Routes>
