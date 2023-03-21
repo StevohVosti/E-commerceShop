@@ -85,10 +85,14 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<UpdatePassword />} exact path="/password/update" />
             <Route element={<Shipping />} exact path="/shipping" />
-              
+            <Route element={<ForgotPassword />} exact path="/password/forgot" />
+            <Route element={<ResetPassword />} exact path="/password/reset/:token" />
+            <Route element={<MyOrders />} exact path="/orders"  />
+            <Route element={<OrderDetails />} exact path="/order/:id"  />
+            <Route element={<ConfirmOrder />} exact path="/order/confirm" />
+          </Route>
             <Route element={<Profile />} exact path="/account" />
             <Route element={<UpdateProfile />} exact path="/me/update" />
-          </Route>
 
           <Route exact path="/about" element={<About />} />
         </Routes>
