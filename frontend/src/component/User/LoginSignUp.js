@@ -13,6 +13,9 @@ const LoginSignUp = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const history = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
@@ -31,7 +34,7 @@ const LoginSignUp = () => {
     password: "",
   });
 
-  const { name, email, password } = user;
+  // const { name, email, password } = user;
 
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
@@ -43,14 +46,15 @@ const LoginSignUp = () => {
 
   const registerSubmit = (e) => {
     e.preventDefault();
+    dispatch(register(name, email, password, avatar));
 
-    const myForm = new FormData();
+    // const myForm = new FormData();
 
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
-    dispatch(register(myForm));
+    // myForm.set("name", name);
+    // myForm.set("email", email);
+    // myForm.set("password", password);
+    // myForm.set("avatar", avatar);
+    // dispatch(register(myForm));
   };
 
   const registerDataChange = (e) => {
@@ -69,6 +73,7 @@ const LoginSignUp = () => {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
+
 
   // const redirect = location.search ? location.search.split("=")[1] : "/account";
 
@@ -153,7 +158,7 @@ const LoginSignUp = () => {
                     required
                     name="name"
                     value={name}
-                    onChange={registerDataChange}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="signUpEmail">
@@ -164,7 +169,7 @@ const LoginSignUp = () => {
                     required
                     name="email"
                     value={email}
-                    onChange={registerDataChange}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="signUpPassword">
@@ -175,7 +180,7 @@ const LoginSignUp = () => {
                     required
                     name="password"
                     value={password}
-                    onChange={registerDataChange}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
@@ -188,6 +193,8 @@ const LoginSignUp = () => {
                     onChange={registerDataChange}
                   />
                 </div>
+
+                
                 <input type="submit" value="Register" className="signUpBtn" />
               </form>
             </div>
