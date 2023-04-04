@@ -5,37 +5,49 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
-// Register User
-exports.registerUser = async (req, res, next) => {
+// register user
+exports.registerUser = async (req, res) => {
   try {
+    const { name, email, password, avatar } = req.body;
 
-    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
+
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
       folder: "avatars",
-      width: 150,
-      crop: "scale",
     });
 
-    const { name, email, password } = req.body;
-
-    const user = await User.create({
+    user = await User.create({
       name,
       email,
       password,
-      avatar: {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-      },
+      avatar: { public_id: myCloud.public_id, url: myCloud.secure_url },
     });
-    res.status(200).json({
-      succees: true,
+
+    const token = await user.generateToken();
+
+    const options = {
+      expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    res.status(201).cookie("token", token, options).json({
+      success: true,
       user,
+      token,
     });
   } catch (error) {
-    res.status(404).json({
+    res.status(500).json({
+      success: false,
       message: error.message,
     });
   }
 };
+
 
 // Login User
 
