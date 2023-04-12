@@ -21,7 +21,7 @@ app.use(
     extended: true,
   })
 );
-app.use(fileUpload());
+// app.use(fileUpload());
 
 // Route Imports
 const product = require("./routes/productRoute");
