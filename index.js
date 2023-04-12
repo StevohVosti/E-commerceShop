@@ -17,10 +17,10 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 // connect Database
-mongoose.set("strictQuery", true);
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", true);
+// mongoose.set("strictQuery", false);
 
-ConnectDatabase();
+// ConnectDatabase();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
